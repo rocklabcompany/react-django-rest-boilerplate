@@ -86,7 +86,7 @@ export const editProfile = async (values) => {
         username: values.username,
         email: values.email,
         avatar: values.avatar,
-        auth_token: localStorage.getItem("token"),
+        auth_token: JSON.parse(localStorage.getItem("token"))?.token,
       },
     });
     return response;
@@ -98,7 +98,7 @@ export const editProfile = async (values) => {
       data: {
         username: values.username,
         email: values.email,
-        auth_token: localStorage.getItem("token"),
+        auth_token: JSON.parse(localStorage.getItem("token"))?.token,
       },
     });
     return response;
@@ -165,7 +165,7 @@ export const deleteTask = async (taskId) => {
     url: API_URL.CRUD_TASKS + taskId + "/",
     headers: getHeaders(),
     data: {
-      auth_token: localStorage.getItem("token"),
+      auth_token: JSON.parse(localStorage.getItem("token"))?.token,
     },
   });
   return response;

@@ -3,19 +3,20 @@ import { isAuth } from "../../hoc/isAuth";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 import Footer from "../Footer";
-import { Outlet } from "react-router-dom"
-
+import { Outlet } from "react-router-dom";
 import "../../index.css";
 
 const Dashboard = ({ children }) => (
-  <div className="flexible-content">
-    <SideBar />
-    <div className="main-container">
-      <NavBar />
-      <main id="content" className="p-5">
+  <div className="container-fluid">
+    <div className="row">
+      <div className="col-md-3 col-lg-2">
+        <SideBar />
+      </div>
+      <div className="col-md-9 col-lg-10">
+        <NavBar />
         <Outlet />
-      </main>
-      <Footer />
+        <Footer />
+      </div>
     </div>
   </div>
 );

@@ -2,10 +2,11 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 
 import { UserFormValidate } from "./validation";
-import {MDBInput} from "mdb-react-ui-kit";
-import {Button} from "reactstrap";
+import { MDBInput } from "mdb-react-ui-kit";
+import { Button } from "reactstrap";
 
-const UserEditForm = props => {
+const UserEditForm = (props) => {
+  console.log(props);
   return (
     <div className="col-lg-7 col-xlg-9 col-md-7">
       <Formik
@@ -14,7 +15,7 @@ const UserEditForm = props => {
         onSubmit={props.handleEditUser}
         enableReinitialize={true}
       >
-        {() => (
+        {({ values, setFieldValue }) => (
           <div className="card">
             <div className="card-body">
               <Form>
@@ -22,12 +23,20 @@ const UserEditForm = props => {
                   name="username"
                   type="text"
                   component={MDBInput}
+                  value={values?.username}
+                  onChange={(event) =>
+                    setFieldValue("username", event.target.value)
+                  }
                   label="Full name"
                 />
                 <Field
                   name="email"
                   type="text"
                   component={MDBInput}
+                  value={values?.email}
+                  onChange={(event) =>
+                    setFieldValue("email", event.target.value)
+                  }
                   label="Email"
                 />
                 <div className="position-relative form-group">
