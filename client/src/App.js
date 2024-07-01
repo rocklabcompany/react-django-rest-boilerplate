@@ -30,15 +30,14 @@ const App = () => {
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.SIGN_IN} element={<Login />} />
           <Route path={path.SIGN_UP} element={<SignUp />} />
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
-          <Route path={path.TASKS} element={<Tasks />} />
-          <Route
-            path={path.PROFILE}
-            element={<Main children={<Dashboard />} />}
-          />
-          <Route path={path.CONFIRM_EMAIL} element={<ConfirmEmail />} />
-          <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route element={<Main />}>
+            <Route path={path.DASHBOARD} element={<Dashboard />} />
+            <Route path={path.TASKS} element={<Tasks />} />
+            <Route path={path.PROFILE} element={<Profile />} />
+            <Route path={path.CONFIRM_EMAIL} element={<ConfirmEmail />} />
+            <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
         </Routes>
       </Provider>
     </BrowserRouter>
