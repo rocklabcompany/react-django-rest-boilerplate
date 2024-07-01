@@ -26,6 +26,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
+        <Suspense fallback={<Loader/>}>
         <Routes>
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.SIGN_IN} element={<Login />} />
@@ -39,6 +40,7 @@ const App = () => {
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
+        </Suspense>
       </Provider>
     </BrowserRouter>
   );

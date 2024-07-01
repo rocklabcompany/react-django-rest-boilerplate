@@ -7,6 +7,7 @@ import { LoginForm } from "../../components/Forms/LoginForm/index";
 
 import { login } from "../../api/queries/index";
 import { useNavigate } from "react-router";
+import {saveData} from "../../utils";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Login = (props) => {
         .then((response) => {
           if (response?.data) {
             props.dispatch({ type: "SET_TOKEN", payload: response.data.key });
-            localStorage.setItem("token", response?.data?.key);
+            saveData("token", response?.data?.key)
             navigate("/dashboard");
           }
         })
