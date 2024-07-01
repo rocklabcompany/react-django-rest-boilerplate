@@ -16,7 +16,7 @@ import {
   getTask,
   createTask,
   deleteTask,
-  updateTask
+  updateTask,
 } from "../../../api/queries";
 class Tasks extends React.Component {
   constructor(props) {
@@ -35,21 +35,21 @@ class Tasks extends React.Component {
         status: "",
         dueDate: "",
         estimatedTime: "",
-        assignedTo: ""
+        assignedTo: "",
       },
-      id: ""
+      id: "",
     };
   }
   componentDidMount() {
     getTask(false, 1).then((response) => {
       this.props.dispatch(setTask(response.data.results));
       this.setState({
-        pages: Math.ceil(response.data.count / PAGINATION)
+        pages: Math.ceil(response.data.count / PAGINATION),
       });
     });
     getUsers().then((response) => {
       this.setState({
-        user: response.data.map((user) => ({ id: user.id, email: user.email }))
+        user: response.data.map((user) => ({ id: user.id, email: user.email })),
       });
     });
   }
@@ -57,19 +57,19 @@ class Tasks extends React.Component {
     this.setState((state) => ({
       [type]: !state[type],
       task: task,
-      id: task.id
+      id: task.id,
     }));
   };
 
   handleActiveModal = (type) => {
     this.setState((state) => ({
-      [type]: !state[type]
+      [type]: !state[type],
     }));
   };
 
   handleDateChange = (date) => {
     this.setState({
-      date: getCurrentDate(date)
+      date: getCurrentDate(date),
     });
   };
 
@@ -80,7 +80,7 @@ class Tasks extends React.Component {
           if (response.status === 201) {
             getTask(false, this.state.page).then((response) => {
               this.setState({
-                pages: Math.ceil(response.data.count / PAGINATION)
+                pages: Math.ceil(response.data.count / PAGINATION),
               });
               this.props.dispatch(setTask(response.data.results));
             });
@@ -90,7 +90,7 @@ class Tasks extends React.Component {
           swal({
             icon: "error",
             title: `${error.response}`,
-            text: "Please try again"
+            text: "Please try again",
           });
         });
       this.setState({ modalCreate: false });
@@ -115,7 +115,7 @@ class Tasks extends React.Component {
           swal({
             icon: "error",
             title: `${error.response}`,
-            text: "Please try again"
+            text: "Please try again",
           });
         });
       this.setState({ modalEdit: false });
@@ -134,7 +134,7 @@ class Tasks extends React.Component {
             if (this.props.tasks.data.length > 1) {
               getTask(false, page).then((response) => {
                 this.setState({
-                  pages: Math.ceil(response.data.count / PAGINATION)
+                  pages: Math.ceil(response.data.count / PAGINATION),
                 });
                 this.props.dispatch(setTask(response.data.results));
               });
@@ -144,7 +144,7 @@ class Tasks extends React.Component {
                 getTask(false, page).then((response) => {
                   this.setState({
                     pages: Math.ceil(response.data.count / PAGINATION),
-                    page: page
+                    page: page,
                   });
                   this.props.dispatch(setTask(response.data.results));
                 });
@@ -152,7 +152,7 @@ class Tasks extends React.Component {
                 getTask(false, 1).then((response) => {
                   this.setState({
                     pages: Math.ceil(response.data.count / PAGINATION),
-                    page: 1
+                    page: 1,
                   });
                   this.props.dispatch(setTask(response.data.results));
                 });
@@ -164,7 +164,7 @@ class Tasks extends React.Component {
           swal({
             icon: "error",
             title: `${error.response}`,
-            text: "Please try again"
+            text: "Please try again",
           });
         });
       this.setState({ modalDelete: false });
@@ -177,7 +177,7 @@ class Tasks extends React.Component {
   fetchData = (item) => {
     const page = this.state.page;
     this.setState({
-      page: item === "prev" ? page - 1 : page + 1
+      page: item === "prev" ? page - 1 : page + 1,
     });
     getTask(false, item === "prev" ? page - 1 : page + 1)
       .then((response) => {
@@ -187,21 +187,14 @@ class Tasks extends React.Component {
         swal({
           icon: "error",
           title: `${error.response}`,
-          text: "Please try again"
+          text: "Please try again",
         });
       });
   };
 
   render() {
-    const {
-      modalCreate,
-      modalEdit,
-      modalDelete,
-      page,
-      pages,
-      task,
-      id
-    } = this.state;
+    const { modalCreate, modalEdit, modalDelete, page, pages, task, id } =
+      this.state;
     return (
       <div>
         <TableHeader
@@ -215,26 +208,26 @@ class Tasks extends React.Component {
           pages={pages}
           modal={this.handleSwitchModal}
         />
-        <Modals
-          modalCreate={modalCreate}
-          modalEdit={modalEdit}
-          modalDelete={modalDelete}
-          handleActiveModal={this.handleActiveModal}
-          handleCreateTask={this.handleCreateTask}
-          handleUpdateTask={this.handleUpdateTask}
-          handleDateChange={this.handleDateChange}
-          deleteTask={this.handleDeleteTask}
-          task={task}
-          user={this.state.user}
-          id={id}
-        />
+        {/*<Modals*/}
+        {/*  modalCreate={modalCreate}*/}
+        {/*  modalEdit={modalEdit}*/}
+        {/*  modalDelete={modalDelete}*/}
+        {/*  handleActiveModal={this.handleActiveModal}*/}
+        {/*  handleCreateTask={this.handleCreateTask}*/}
+        {/*  handleUpdateTask={this.handleUpdateTask}*/}
+        {/*  handleDateChange={this.handleDateChange}*/}
+        {/*  deleteTask={this.handleDeleteTask}*/}
+        {/*  task={task}*/}
+        {/*  user={this.state.user}*/}
+        {/*  id={id}*/}
+        {/*/>*/}
       </div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    tasks: state.tasks
+    tasks: state.tasks,
   };
 }
 export default connect(mapStateToProps)(isAuth(Tasks));

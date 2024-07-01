@@ -1,96 +1,117 @@
 import React, { Fragment } from "react";
-import ReactTable from "react-table";
 
 import Pagination from "./PaginateTable";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
-class TaskTable extends React.Component {
-  render() {
-    const columns = [
-      {
-        Header: "General",
-        columns: [
-          {
-            Header: "Title",
-            accessor: "name"
-          },
-          {
-            Header: "Description",
-            accessor: "description"
-          }
-        ]
-      },
-      {
-        Header: "Info",
-        columns: [
-          {
-            Header: "Status",
-            accessor: "status",
-            Cell: row =>
-              row.original.status === 0
-                ? "To Do"
-                : row.original.status === 1
+const TaskTable = (props) => {
+  const columnHelper = createColumnHelper();
+  const columns = [
+    columnHelper.group({
+      header: " ",
+      footer: (props) => props.column.id,
+      columns: [
+        columnHelper.accessor((row) => row?.id, {
+          id: "id",
+          cell: (info) => info.getValue(),
+          header: () => <span>ID</span>,
+          footer: (props) => props.column.id,
+        }),
+        columnHelper.accessor((row) => row?.name, {
+          id: "name",
+          cell: (info) => info.getValue(),
+          header: () => <span>Name</span>,
+          footer: (props) => props.column.id,
+        }),
+        columnHelper.accessor((row) => row?.description, {
+          id: "description",
+          cell: (info) => info.getValue(),
+          header: () => <span>Description</span>,
+          footer: (props) => props.column.id,
+        }),
+        columnHelper.accessor((row) => row?.due_date, {
+          id: "due_date",
+          cell: (info) => info.getValue(),
+          header: () => <span>due_date</span>,
+          footer: (props) => props.column.id,
+        }),
+        columnHelper.accessor((row) => row?.estimated_time, {
+          id: "estimated_time",
+          cell: (info) => info.getValue(),
+          header: () => <span>estimated_time</span>,
+          footer: (props) => props.column.id,
+        }),
+        columnHelper.accessor((row) => row.status, {
+          id: "status",
+          cell: (info) => {
+            const status = info.getValue();
+            return status === 0
+              ? "To Do"
+              : status === 1
                 ? "In Progress"
-                : row.original.status === 2
-                ? "Done"
-                : null
+                : status === 2
+                  ? "Done"
+                  : null;
           },
-          {
-            Header: "Due date",
-            accessor: "due_date"
-          },
-          {
-            Header: "Estimated time",
-            accessor: "estimated_time"
-          }
-        ]
-      },
-      {
-        Header: "Responsibility",
-        columns: [
-          {
-            Header: "Assigned to",
-            accessor: "assigned_to",
-            Cell: row =>
-              row.original.assigned_to ? row.original.assigned_to.email : null
-          }
-        ]
-      },
-      {
-        Header: "Actions",
-        Cell: row => (
-          <div>
-            {/*<IosCreateOutline*/}
-            {/*  onClick={() => this.props.modal("modalEdit", row.original)}*/}
-            {/*  fontSize="30px"*/}
-            {/*  color="#007bff"*/}
-            {/*/>*/}
-            {/*<IosRemoveCircleOutline*/}
-            {/*  onClick={() => this.props.modal("modalDelete", row.original)}*/}
-            {/*  fontSize="30px"*/}
-            {/*  color="#007bff"*/}
-            />
-          </div>
-        )
-      }
-    ];
-    return (
-      <Fragment>
-        <ReactTable
-          data={this.props.tasks}
-          columns={columns}
-          showPagination={false}
-          showPageJump={false}
-          showPageSizeOptions={false}
-          defaultPageSize={10}
-          className="-striped -highlight table"
-        />
-        <Pagination
-          fetchData={this.props.fetchData}
-          page={this.props.page}
-          pages={this.props.pages}
-        />
-      </Fragment>
-    );
-  }
-}
+          header: () => <span>Status</span>,
+          footer: (props) => props.column.id,
+        }),
+      ],
+    }),
+  ];
+
+  const table = useReactTable({
+    columns,
+    data: props?.tasks,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
+  console.log(table.getHeaderGroups());
+  return (
+    <Fragment>
+      <table>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Pagination
+        fetchData={props.fetchData}
+        page={props.page}
+        pages={props.pages}
+      />
+    </Fragment>
+  );
+};
+
 export default TaskTable;
