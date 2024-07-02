@@ -7,6 +7,7 @@ import { login } from "api/queries/index";
 import { useNavigate } from "react-router";
 import { saveData } from "utils";
 import { Flex } from "@chakra-ui/react";
+import { notAuth } from "../../hoc/notAuth";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -51,4 +52,4 @@ const mapStateToProps = (state) => ({
   data: state.user,
 });
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(notAuth(Login));

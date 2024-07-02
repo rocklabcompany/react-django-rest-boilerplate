@@ -5,6 +5,7 @@ import { SignUpForm } from "components/Forms/SignUpForm";
 import swal from "sweetalert";
 import { signUp } from "api/queries/index.js";
 import { Flex } from "@chakra-ui/react";
+import { notAuth } from "../../hoc/notAuth";
 
 const SignUp = (props) => {
   const handleSignUp = async (values, { setErrors }) => {
@@ -44,4 +45,4 @@ const SignUp = (props) => {
   );
 };
 
-export default SignUp;
+export default notAuth(SignUp);

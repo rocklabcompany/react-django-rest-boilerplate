@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { verifyToken, getMe } from "../api/queries/index";
 import { useNavigate } from "react-router";
-export const isAuth = (WrappedComponent) => {
+export const notAuth = (WrappedComponent) => {
   const AuthComponent = (props) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
@@ -13,8 +13,8 @@ export const isAuth = (WrappedComponent) => {
           const response = await verifyToken();
           const me = await getMe(localStorage.getItem("token"));
           setUser(me.data);
-          if (!response?.data?.verified) {
-            navigate("/login");
+          if (response?.data?.verified) {
+            navigate("/dashboard");
           }
         } catch (error) {
           navigate("/login");
