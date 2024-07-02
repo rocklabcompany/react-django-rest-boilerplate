@@ -1,42 +1,71 @@
 import React from "react";
 
 import { Formik, Form, Field } from "formik";
-import { Button } from "reactstrap";
 import { LoginSchema } from "./validation";
-import {MDBInput} from "mdb-react-ui-kit";
-
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  Heading,
+} from "@chakra-ui/react";
 export const LoginForm = ({ login }) => (
   <Formik
     initialValues={{
       username: "",
-      password: ""
+      password: "",
     }}
     validationSchema={LoginSchema}
     onSubmit={login}
   >
-    {({setFieldValue}) => (
-      <div className="card">
-        <div className="card-header">Login</div>
-        <div className="card-body">
+    {({ setFieldValue }) => (
+      <Card>
+        <CardHeader>
+          <Heading size="md">Login</Heading>
+        </CardHeader>
+        <CardBody>
           <Form>
-            <Field
-              name="username"
-              type="email"
-              component={MDBInput}
-              onChange={(e) => setFieldValue("username", e.target.value)}
-              label="Email"
-            />
-            <Field
-              name="password"
-              type="password"
-              component={MDBInput}
-              onChange={(e) => setFieldValue("password", e.target.value)}
-              label="Password"
-            />
-            <Button type="submit" >Submit</Button>
+            <FormControl>
+              <FormLabel htmlFor={"email"}>Email Address:</FormLabel>
+              <Field
+                name="email"
+                type="email"
+                component={Input}
+                onChange={(e) => setFieldValue("username", e.target.value)}
+                label="Email"
+                placeholder="Email"
+                variant="filled"
+              />
+            </FormControl>
+            <FormControl style={{ marginTop: "15px" }}>
+              <FormLabel htmlFor={"password"}>Password:</FormLabel>
+              <InputGroup>
+                <Field
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  component={Input}
+                  onChange={(e) => setFieldValue("password", e.target.value)}
+                  label="Password"
+                  variant="filled"
+                />
+              </InputGroup>
+            </FormControl>
+            <Button
+              style={{ marginTop: "25px" }}
+              type="submit"
+              colorScheme="purple"
+              width="full"
+            >
+              Login
+            </Button>
           </Form>
-        </div>
-      </div>
+        </CardBody>
+      </Card>
     )}
   </Formik>
 );

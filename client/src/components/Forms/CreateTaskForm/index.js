@@ -8,112 +8,126 @@ import Select from "react-select";
 import { TaskSchema } from "./validation";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "./style.scss";
-import {MDBInput} from "mdb-react-ui-kit";
-import {Button} from "reactstrap";
 
-const CreateTaskForm = props => (
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
+
+const CreateTaskForm = (props) => (
   <Formik
     initialValues={{
       title: "",
       description: "",
       estimatedTime: 0,
-      statusSelect: 2,
+      statusSelect: "2",
       dueDate: new Date(),
       assignedTo: "",
-      user: []
+      user: [],
     }}
-    validationSchema={TaskSchema}
+    // validationSchema={TaskSchema}
     onSubmit={props.submitForm}
   >
     {({ values, setFieldValue, touched, errors }) => (
-      <div className="card">
-        <div className="card-body">
-          <Form>
-            <Field
-              name="title"
-              type="text"
-              component={MDBInput}
-              label="Title"
-            />
-            <Field
-              name="description"
-              type="text"
-              component={MDBInput}
-              label="Description"
-            />
-            <label>Status</label>
-            <select
-              id="statusSelect"
-              name="status"
-              className="browser-default custom-select position-relative form-group"
-              onChange={e => setFieldValue("statusSelect", e.target.value)}
-              value={values.statusSelect}
-            >
-              <option value="0">ToDo</option>
-              <option value="1">InProgress</option>
-              <option value="2">Done</option>
-            </select>
-            <div className="position-relative form-group">
-              <label>Due date</label>
-              <div>
-                <DatePicker
-                  selected={values.dueDate}
-                  onChange={date => setFieldValue("dueDate", date)}
-                  className={`date-picker ${
-                    errors.dueDate && touched.dueDate
-                      ? "data-picker-is-invalid"
-                      : ""
-                  }`}
-                />
-                {errors.dueDate && touched.dueDate && (
-                  <div
-                    className="invalid-feedback"
-                    style={{ display: "block" }}
-                  >
-                    {errors.dueDate}
-                  </div>
-                )}
-              </div>
-            </div>
-            <Field
-              name="estimatedTime"
-              type="number"
-              component={MDBInput}
-              label="Estimate Time"
-            />
-            <label>Assigned to</label>
-            <Field
-              name="assignedTo"
-              component={Select}
-              options={props.user.map(user => ({
-                label: user.email,
-                value: user.id
-              }))}
-              label="Assigned to"
-              onChange={e => setFieldValue("assignedTo", e)}
-              value={values.assignedTo}
-              className={` ${
-                errors.assignedTo && touched.assignedTo
-                  ? "select-is-ivalid"
-                  : ""
-              }`}
-              classNamePrefix="select"
-            />
-            {errors.assignedTo && touched.assignedTo && (
-              <div className="invalid-feedback" style={{ display: "block" }}>
-                {errors.assignedTo}
-              </div>
-            )}
-            <br />
-            <div>
-              <Button color="primary" type="submit" style={{ margin: 0 }}>
-                Save
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </div>
+      <Form>
+        <FormControl as="div" className="card">
+          <FormLabel htmlFor="title">Title</FormLabel>
+          <Field
+            name="title"
+            type="text"
+            as={Input}
+            className={`form-control ${
+              errors.title && touched.title ? "is-invalid" : ""
+            }`}
+          />
+          <FormErrorMessage>
+            {errors.title && touched.title && errors.title}
+          </FormErrorMessage>
+
+          <FormLabel htmlFor="description">Description</FormLabel>
+          <Field
+            name="description"
+            type="text"
+            as={Input}
+            className={`form-control ${
+              errors.description && touched.description ? "is-invalid" : ""
+            }`}
+          />
+          <FormErrorMessage>
+            {errors.description && touched.description && errors.description}
+          </FormErrorMessage>
+
+          <FormLabel htmlFor="statusSelect">Status</FormLabel>
+          <Field
+            name="statusSelect"
+            as="select"
+            className={`form-control ${
+              errors.statusSelect && touched.statusSelect ? "is-invalid" : ""
+            }`}
+            onChange={(e) => setFieldValue("statusSelect", e.target.value)}
+            value={values.statusSelect}
+          >
+            <option value="0">ToDo</option>
+            <option value="1">InProgress</option>
+            <option value="2">Done</option>
+          </Field>
+          <FormErrorMessage>
+            {errors.statusSelect && touched.statusSelect && errors.statusSelect}
+          </FormErrorMessage>
+
+          <FormLabel htmlFor="dueDate">Due date</FormLabel>
+          <DatePicker
+            selected={values.dueDate}
+            onChange={(date) => setFieldValue("dueDate", date)}
+            className={`date-picker ${
+              errors.dueDate && touched.dueDate ? "data-picker-is-invalid" : ""
+            }`}
+          />
+          <FormErrorMessage>
+            {errors.dueDate && touched.dueDate && errors.dueDate}
+          </FormErrorMessage>
+
+          <FormLabel htmlFor="estimatedTime">Estimate Time</FormLabel>
+          <Field
+            name="estimatedTime"
+            type="number"
+            as={Input}
+            className={`form-control ${
+              errors.estimatedTime && touched.estimatedTime ? "is-invalid" : ""
+            }`}
+          />
+          <FormErrorMessage>
+            {errors.estimatedTime &&
+              touched.estimatedTime &&
+              errors.estimatedTime}
+          </FormErrorMessage>
+
+          <FormLabel htmlFor="assignedTo">Assigned to</FormLabel>
+          <Field
+            name="assignedTo"
+            as={Select}
+            className={`form-control ${
+              errors.assignedTo && touched.assignedTo ? "is-invalid" : ""
+            }`}
+            onChange={(e) => setFieldValue("assignedTo", e)}
+            value={values.assignedTo}
+            options={props.user.map((user) => ({
+              label: user.email,
+              value: user.id,
+            }))}
+          />
+          <FormErrorMessage>
+            {errors.assignedTo && touched.assignedTo && errors.assignedTo}
+          </FormErrorMessage>
+
+          <Button colorScheme="teal" type="submit" mt={4}>
+            Save
+          </Button>
+        </FormControl>
+      </Form>
     )}
   </Formik>
 );

@@ -1,14 +1,19 @@
 import React from "react";
-
-import "./style.css";
-import {Container} from "reactstrap";
+import { Box, Heading } from "@chakra-ui/react";
 
 const PageNotFound = () => (
-  <Container>
-    <div className="wrapp">
-      <h1> Page not found :( </h1>
-    </div>
-  </Container>
+  <Box
+    textAlign="center"
+    py={10}
+    px={6}
+    boxShadow="md"
+    borderRadius="lg"
+    bg="gray.100"
+  >
+    <Heading as="h1" size="2xl" mb={4}>
+      Page Not Found :(
+    </Heading>
+  </Box>
 );
 
 export default PageNotFound;

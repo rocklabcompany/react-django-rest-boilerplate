@@ -1,10 +1,13 @@
 import React from "react";
-import {MDBCardTitle} from "mdb-react-ui-kit";
+import { Box, Spinner, Heading } from "@chakra-ui/react";
 
 const Loader = ({ styles }) => (
-  <MDBCardTitle style={styles}>
-    <div className="loader" style={{ margin: "auto" }} />
-  </MDBCardTitle>
+  <Box textAlign="center" style={styles}>
+    <Spinner size="xl" color="teal.500" />
+    <Heading size="md" mt={4}>
+      Loading...
+    </Heading>
+  </Box>
 );
 
 export default Loader;

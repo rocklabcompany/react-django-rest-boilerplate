@@ -1,9 +1,8 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { Button } from "reactstrap";
 
 import { ResetPasswordSchema } from "./validation";
-import {MDBInput} from "mdb-react-ui-kit";
+import { Button, Input } from "@chakra-ui/react";
 
 export const ResetPasswordForm = ({ uid, confirmToken, resetPassword }) => (
   <Formik
@@ -11,7 +10,7 @@ export const ResetPasswordForm = ({ uid, confirmToken, resetPassword }) => (
       newPassword1: "",
       newPassword2: "",
       userId: uid,
-      confirmToken: confirmToken
+      confirmToken: confirmToken,
     }}
     validationSchema={ResetPasswordSchema}
     onSubmit={resetPassword}
@@ -24,13 +23,13 @@ export const ResetPasswordForm = ({ uid, confirmToken, resetPassword }) => (
             <Field
               name="newPassword1"
               type="password"
-              component={MDBInput}
+              component={Input}
               label="password1"
             />
             <Field
               name="newPassword2"
               type="password"
-              component={MDBInput}
+              component={Input}
               label="password2"
             />
             <Button type="submit">Submit</Button>

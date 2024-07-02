@@ -1,36 +1,63 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { DASHBOARD, PROFILE, TASKS } from "../../constants/routes";
+import { Link, NavLink } from "react-router-dom";
+import { DASHBOARD, PROFILE, TASKS } from "constants/routes";
 
-import logo from "../../../src/assets/logo.svg";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import logo from "assets/logo.svg";
+import { Box, List, Image, ListItem, Icon } from "@chakra-ui/react";
+import { DragHandleIcon, EditIcon, HamburgerIcon } from "@chakra-ui/icons";
 
 const Sidebar = () => (
-  <div className="sidebar-fixed position-fixed">
-    <a href={DASHBOARD} className="logo-wrapper waves-effect">
-      <img alt="MDB React Logo" className="img-fluid" src={logo} />
-    </a>
-    <ListGroup className="list-group-flush">
-      <NavLink exact={true} to={DASHBOARD} activeClassName="activeClass">
-        <ListGroupItem>
-          {/*<Fa icon="pie-chart" className="mr-3" />*/}
-          Dashboard
-        </ListGroupItem>
-      </NavLink>
-      <NavLink to={PROFILE} activeClassName="activeClass">
-        <ListGroupItem>
-          {/*<Fa icon="user" className="mr-3" />/*/}
-          Profile
-        </ListGroupItem>
-      </NavLink>
-      <NavLink to={TASKS} activeClassName="activeClass">
-        <ListGroupItem>
-          {/*<Fa icon="table" className="mr-3" />*/}
-          Tasks
-        </ListGroupItem>
-      </NavLink>
-    </ListGroup>
-  </div>
+  <Box bg="gray.100" p={4}>
+    <Link href={DASHBOARD} className="logo-wrapper waves-effect" to={DASHBOARD}>
+      <Image alt="Logo" src={logo} mb={6} />
+    </Link>
+    <List spacing={4}>
+      <ListItem>
+        <NavLink exact to={DASHBOARD} activeClassName="activeClass">
+          <Box
+            as="span"
+            display="flex"
+            alignItems="center"
+            p={2}
+            borderRadius="md"
+            _hover={{ bg: "teal.500", color: "white" }}
+          >
+            <Icon as={DragHandleIcon} mr={3} />
+            Dashboard
+          </Box>
+        </NavLink>
+      </ListItem>
+      <ListItem>
+        <NavLink to={PROFILE} activeClassName="activeClass">
+          <Box
+            as="span"
+            display="flex"
+            alignItems="center"
+            p={2}
+            borderRadius="md"
+            _hover={{ bg: "teal.500", color: "white" }}
+          >
+            <Icon as={EditIcon} mr={3} />
+            Profile
+          </Box>
+        </NavLink>
+      </ListItem>
+      <ListItem>
+        <NavLink to={TASKS} activeClassName="activeClass">
+          <Box
+            as="span"
+            display="flex"
+            alignItems="center"
+            p={2}
+            borderRadius="md"
+            _hover={{ bg: "teal.500", color: "white" }}
+          >
+            <Icon as={HamburgerIcon} mr={3} /> Tasks
+          </Box>
+        </NavLink>
+      </ListItem>
+    </List>
+  </Box>
 );
 
 export default Sidebar;

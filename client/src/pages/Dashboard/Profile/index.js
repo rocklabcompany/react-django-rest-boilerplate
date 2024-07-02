@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import UserProfile from "../../../components/UserProfile";
-import UserEditForm from "../../../components/Forms/UserEditForm";
-import { getBase64 } from "../../../utils";
+import UserProfile from "components/UserProfile";
+import UserEditForm from "components/Forms/UserEditForm";
+import { getBase64 } from "utils";
 
 import { isAuth } from "../../../hoc/isAuth";
 
-import { editProfile, getMe } from "../../../api/queries/index";
+import { editProfile, getMe } from "api/queries/index";
+import { Box, Flex, Stack } from "@chakra-ui/react";
 
 const Profile = (props) => {
   const [avatar, setAvatar] = useState("");
@@ -54,15 +55,21 @@ const Profile = (props) => {
   };
 
   return (
-    <div className="row">
-      <UserProfile profile={user} avatar={avatar} />
-      <UserEditForm
-        initialValues={user}
-        handleEditUser={handleEditUser}
-        handleImageChange={handleImageChange}
-        error={imageError}
-      />
-    </div>
+    <Flex bg="gray.100" h="100vh" w="100vw">
+      <Stack direction="row" w="100vw">
+        <Box w="40%">
+          <UserProfile profile={user} avatar={avatar} />
+        </Box>
+        <Box w="60%">
+          <UserEditForm
+            initialValues={user}
+            handleEditUser={handleEditUser}
+            handleImageChange={handleImageChange}
+            error={imageError}
+          />
+        </Box>
+      </Stack>
+    </Flex>
   );
 };
 

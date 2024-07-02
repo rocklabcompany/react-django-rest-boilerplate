@@ -1,54 +1,91 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { Button } from "reactstrap";
 
 import { SignupSchema } from "./validation";
-import {MDBInput} from "mdb-react-ui-kit";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+} from "@chakra-ui/react";
 
-export const SignUpForm = props => (
+export const SignUpForm = (props) => (
   <Formik
     initialValues={{
       username: "",
       email: "",
       password1: "",
-      password2: ""
+      password2: "",
     }}
     validationSchema={SignupSchema}
     onSubmit={props.register}
   >
     {() => (
-      <div className="card">
-        <div className="card-header">Signup</div>
-        <div className="card-body">
+      <Card className="card">
+        <CardHeader className="card-header">
+          <Heading> Signup</Heading>
+        </CardHeader>
+        <CardBody>
           <Form>
-            <Field
-              name="username"
-              type="text"
-              component={MDBInput}
-              label="Name"
-            />
-            <Field
-              name="email"
-              type="email"
-              component={MDBInput}
-              label="Email"
-            />
-            <Field
-              name="password1"
-              type="password"
-              component={MDBInput}
-              label="Password"
-            />
-            <Field
-              name="password2"
-              type="password"
-              component={MDBInput}
-              label="Password confirmation"
-            />
-            <Button type="submit">Submit</Button>
+            <FormControl style={{ marginTop: "15px" }}>
+              <FormLabel htmlFor={"username"}>Username:</FormLabel>
+              <Field
+                name="username"
+                type="text"
+                component={Input}
+                label="Name"
+                placeholder={"username"}
+                variant="filled"
+              />
+            </FormControl>
+            <FormControl style={{ marginTop: "15px" }}>
+              <FormLabel htmlFor={"password"}>Password:</FormLabel>
+              <Field
+                name="email"
+                type="email"
+                component={Input}
+                label="Email"
+                placeholder={"email"}
+                variant="filled"
+              />
+            </FormControl>
+            <FormControl style={{ marginTop: "15px" }}>
+              <FormLabel htmlFor={"password"}>Password:</FormLabel>
+              <Field
+                name="password1"
+                type="password"
+                component={Input}
+                placeholder={"password"}
+                variant="filled"
+              />
+            </FormControl>
+            <FormControl style={{ marginTop: "15px" }}>
+              <FormLabel htmlFor={"password2"}>
+                Password confirmation:
+              </FormLabel>
+              <Field
+                name="password2"
+                type="password"
+                component={Input}
+                placeholder={"password"}
+                variant="filled"
+              />
+            </FormControl>
+            <Button
+              style={{ marginTop: "25px" }}
+              type="submit"
+              colorScheme="purple"
+              width="full"
+            >
+              Login
+            </Button>
           </Form>
-        </div>
-      </div>
+        </CardBody>
+      </Card>
     )}
   </Formik>
 );

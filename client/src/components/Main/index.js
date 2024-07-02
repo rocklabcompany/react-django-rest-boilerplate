@@ -1,24 +1,24 @@
 import React from "react";
-import { isAuth } from "../../hoc/isAuth";
+import { isAuth } from "hoc/isAuth";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 import Footer from "../Footer";
 import { Outlet } from "react-router-dom";
-import "../../index.css";
+import { Box, Flex } from "@chakra-ui/react";
 
 const Dashboard = ({ children }) => (
-  <div className="container-fluid">
-    <div className="row">
-      <div className="col-md-3 col-lg-2">
-        <SideBar />
-      </div>
-      <div className="col-md-9 col-lg-10">
-        <NavBar />
+  <Flex minHeight="100vh" height="auto">
+    <Box bg="gray.100" height="auto">
+      <SideBar />
+    </Box>
+    <Box width="100%" bg="white" flex="1" direction="column">
+      <NavBar />
+      <Box flex="1">
         <Outlet />
-        <Footer />
-      </div>
-    </div>
-  </div>
+      </Box>
+      <Footer />
+    </Box>
+  </Flex>
 );
 
 export default isAuth(Dashboard);

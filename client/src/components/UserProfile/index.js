@@ -1,43 +1,53 @@
 import React from "react";
 import profileImg from "../../assets/profile-icon-png-898.png";
+import {
+  Box,
+  Center,
+  Divider,
+  Text,
+  Heading,
+  VStack,
+  Image,
+} from "@chakra-ui/react";
 const UserInfo = ({ profile, avatar }) => {
   return (
-    <div className="col-lg-2 col-xlg-2 col-md-3">
-      <div className="card">
-        <div className="card-body">
-          <center className="m-t-30">
-            {avatar && avatar.length > 0 ? (
-              <img
-                src={`${avatar}`}
-                alt="avatar"
-                className="card-img-top"
-                id="avatar"
-              />
-            ) : profile && profile.avatar ? (
-              <img
-                src={`${profile.avatar}`}
-                alt="avatar"
-                className="card-img-top"
-                id="avatar"
-              />
-            ) : (
-              <img src={profileImg} alt="avatar" className="card-img-top" />
-            )}
-          </center>
-          <br />
-          <h4 className="card-title text-center m-t-10">
-            {profile ? profile.username : null}
-          </h4>
-        </div>
-        <div>
-          <hr />
-        </div>
-        <div className="card-body">
-          <small className="text-muted">Email address </small>
-          <h6>{profile ? profile.email : null}</h6>
-        </div>
-      </div>
-    </div>
+    <Box>
+      <Center mt={4}>
+        {avatar && avatar.length > 0 ? (
+          <Image
+            borderRadius="full"
+            boxSize="150px"
+            src={avatar}
+            alt="avatar"
+          />
+        ) : profile && profile.avatar ? (
+          <Image
+            borderRadius="full"
+            boxSize="150px"
+            src={profile.avatar}
+            alt="avatar"
+          />
+        ) : (
+          <Image
+            borderRadius="full"
+            boxSize="150px"
+            src={profileImg}
+            alt="avatar"
+          />
+        )}
+      </Center>
+      <VStack spacing={4} mt={4} textAlign="center">
+        <Heading size="md">{profile ? profile.username : "Username"}</Heading>
+        <Divider />
+        <Box>
+          <Text fontSize="sm" color="gray.500">
+            Email address
+          </Text>
+          <Text fontSize="md">{profile ? profile.email : "Email"}</Text>
+        </Box>
+      </VStack>
+    </Box>
   );
 };
+
 export default UserInfo;

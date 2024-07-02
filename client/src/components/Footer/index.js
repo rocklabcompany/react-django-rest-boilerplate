@@ -1,47 +1,43 @@
 import React from "react";
-import {MDBFooter} from "mdb-react-ui-kit";
-import {Button} from "react-bootstrap";
+import {
+  Box,
+  Button,
+  Link,
+  Divider,
+  Text,
+  Flex,
+  Center,
+} from "@chakra-ui/react";
 
 const Footer = () => (
-  <MDBFooter color="blue" className="text-center font-small darken-2">
-    <div className="pt-4">
+  <Box bg="gray.100" color="white" py={8} px={4}>
+    <Center>
       <Button
-        outline
-        color="white"
-        tag="a"
-        href="https://mdbootstrap.com/docs/react/getting-started/download/"
+        colorScheme="purple"
+        variant="outline"
+        color="black"
+        mr={4}
+        as={Link}
         target="_blank"
       >
-        Download MDB
-        {/*<Fa icon="download" className="ml-2" />*/}
+        Download
       </Button>
       <Button
-        outline
-        color="white"
-        tag="a"
-        href="https://mdbootstrap.com/docs/react/getting-started/quick-start/"
+        colorScheme="purple"
+        variant="outline"
+        color="black"
+        as={Link}
         target="_blank"
       >
         Start free tutorial
-        {/*<Fa icon="graduation-cap" className="ml-2" />*/}
       </Button>
-      <hr className="my4" />
-    </div>
-    <div className="pb-4">
-      {/*<Fa icon="facebook" className="mr-3" />*/}
-      {/*<Fa icon="twitter" className="mr-3" />*/}
-      {/*<Fa icon="youtube" className="mr-3" />*/}
-      {/*<Fa icon="google-plus" className="mr-3" />*/}
-      {/*<Fa icon="dribbble" className="mr-3" />*/}
-      {/*<Fa icon="pinterest" className="mr-3" />*/}
-      {/*<Fa icon="github" className="mr-3" />*/}
-      {/*<Fa icon="codepen" className="mr-3" />*/}
-    </div>
-    <p className="footer-copyright mb-0 py-3 text-center">
-      &copy; {new Date().getFullYear()} Copyright:{" "}
-      <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
-    </p>
-  </MDBFooter>
+    </Center>
+    <Divider my={4} borderColor="black" />
+    <Flex justify="center"></Flex>
+    <Text mt={4} textAlign="center" color="black" fontSize="sm">
+      &copy; {new Date().getFullYear()} Company. All rights reserved.
+    </Text>
+  </Box>
 );
 
 export default Footer;

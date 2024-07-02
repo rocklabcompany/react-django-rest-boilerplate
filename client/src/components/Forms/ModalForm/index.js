@@ -1,28 +1,34 @@
 import React from "react";
-import {Container, Modal} from "reactstrap";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
-const ModalForm = props => {
+const ModalForm = (props) => {
   const flex = {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: "1rem",
   };
+
   return (
-    <Container>
-      <Modal isOpen={props.isActive} toggle={props.closeModal}>
-        <div className="card-body">
+    <Modal isOpen={props.isActive} onClose={props.closeModal}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
           <div style={flex}>
             <h3>{props.title}</h3>
-            {/*<IosClose*/}
-            {/*  onClick={props.closeModal}*/}
-            {/*  fontSize="30px"*/}
-            {/*  color="#007bff"*/}
-            {/*/>*/}
+            <ModalCloseButton />
           </div>
-        </div>
-        {props.children}
-      </Modal>
-    </Container>
+        </ModalHeader>
+        <ModalBody>{props.children}</ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 

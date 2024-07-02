@@ -1,110 +1,60 @@
 import React, { Fragment } from "react";
 
 import Pagination from "./PaginateTable";
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+
+import { Box, Icon, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 const TaskTable = (props) => {
-  const columnHelper = createColumnHelper();
-  const columns = [
-    columnHelper.group({
-      header: " ",
-      footer: (props) => props.column.id,
-      columns: [
-        columnHelper.accessor((row) => row?.id, {
-          id: "id",
-          cell: (info) => info.getValue(),
-          header: () => <span>ID</span>,
-          footer: (props) => props.column.id,
-        }),
-        columnHelper.accessor((row) => row?.name, {
-          id: "name",
-          cell: (info) => info.getValue(),
-          header: () => <span>Name</span>,
-          footer: (props) => props.column.id,
-        }),
-        columnHelper.accessor((row) => row?.description, {
-          id: "description",
-          cell: (info) => info.getValue(),
-          header: () => <span>Description</span>,
-          footer: (props) => props.column.id,
-        }),
-        columnHelper.accessor((row) => row?.due_date, {
-          id: "due_date",
-          cell: (info) => info.getValue(),
-          header: () => <span>due_date</span>,
-          footer: (props) => props.column.id,
-        }),
-        columnHelper.accessor((row) => row?.estimated_time, {
-          id: "estimated_time",
-          cell: (info) => info.getValue(),
-          header: () => <span>estimated_time</span>,
-          footer: (props) => props.column.id,
-        }),
-        columnHelper.accessor((row) => row.status, {
-          id: "status",
-          cell: (info) => {
-            const status = info.getValue();
-            return status === 0
-              ? "To Do"
-              : status === 1
-                ? "In Progress"
-                : status === 2
-                  ? "Done"
-                  : null;
-          },
-          header: () => <span>Status</span>,
-          footer: (props) => props.column.id,
-        }),
-      ],
-    }),
-  ];
-
-  const table = useReactTable({
-    columns,
-    data: props?.tasks,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
-  console.log(table.getHeaderGroups());
   return (
     <Fragment>
-      <table>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Box overflowX="auto">
+        <Table variant="striped" colorScheme="gray">
+          <Thead>
+            <Tr>
+              <Th>ID</Th>
+              <Th>Name</Th>
+              <Th>Description</Th>
+              <Th>Due Date</Th>
+              <Th>Estimated Time</Th>
+              <Th>Status</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {props.tasks.map((task) => (
+              <Tr key={task.id}>
+                <Td>{task.id}</Td>
+                <Td>{task.name}</Td>
+                <Td>{task.description}</Td>
+                <Td>{task.due_date}</Td>
+                <Td>{task.estimated_time}</Td>
+                <Td>
+                  {task.status === 0
+                    ? "To Do"
+                    : task.status === 1
+                      ? "In Progress"
+                      : task.status === 2
+                        ? "Done"
+                        : null}
+                </Td>
+                <Td>
+                  <Icon
+                    onClick={() => props.modal("modalEdit", task)}
+                    as={EditIcon}
+                    mr={2}
+                  />
+                  <Icon
+                    as={DeleteIcon}
+                    aria-label="Delete Task"
+                    onClick={() => props.modal("modalDelete", task)}
+                  />
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
       <Pagination
         fetchData={props.fetchData}
         page={props.page}

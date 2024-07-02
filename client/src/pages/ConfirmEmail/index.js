@@ -1,23 +1,23 @@
 import React from "react";
-import { Container } from "reactstrap";
 
-import * as path from "../../constants/routes";
+import * as path from "constants/routes";
 
-import { ConfirmEmailForm } from "../../components/Forms/ConfirmEmailForm/index";
+import { ConfirmEmailForm } from "components/Forms/ConfirmEmailForm";
 
-import { confirmEmail } from "../../api/queries/index";
+import { confirmEmail } from "api/queries/index";
 import swal from "sweetalert";
+import { Flex } from "@chakra-ui/react";
 
 const ConfirmEmail = ({ history }) => {
   const handleConfirmEmail = async (values, { setErrors }) => {
     try {
       await confirmEmail(values)
-        .then(response => {
+        .then((response) => {
           if (response.status === 200) {
             swal({
               icon: "success",
               title: `${response.data.detail}`,
-              text: "Good Job"
+              text: "Good Job",
             }).then(() => {
               history.push(path.HOME);
             });
@@ -25,16 +25,16 @@ const ConfirmEmail = ({ history }) => {
             setErrors(response.data.detail);
           }
         })
-        .catch(error => setErrors(error.response));
+        .catch((error) => setErrors(error.response));
     } catch (error) {
       return;
     }
   };
 
   return (
-    <Container>
+    <Flex>
       <ConfirmEmailForm confirmEmail={handleConfirmEmail} />
-    </Container>
+    </Flex>
   );
 };
 

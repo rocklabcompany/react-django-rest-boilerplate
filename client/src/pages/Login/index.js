@@ -2,12 +2,11 @@ import React from "react";
 import swal from "sweetalert";
 
 import { connect } from "react-redux";
-import { Container } from "reactstrap";
-import { LoginForm } from "../../components/Forms/LoginForm/index";
-
-import { login } from "../../api/queries/index";
+import { LoginForm } from "components/Forms/LoginForm";
+import { login } from "api/queries/index";
 import { useNavigate } from "react-router";
-import {saveData} from "../../utils";
+import { saveData } from "utils";
+import { Flex } from "@chakra-ui/react";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const Login = (props) => {
         .then((response) => {
           if (response?.data) {
             props.dispatch({ type: "SET_TOKEN", payload: response.data.key });
-            saveData("token", response?.data?.key)
+            saveData("token", response?.data?.key);
             navigate("/dashboard");
           }
         })
@@ -42,9 +41,9 @@ const Login = (props) => {
     }
   };
   return (
-    <Container>
+    <Flex bg="gray.100" align="center" justify="center" h="100vh">
       <LoginForm login={handleLogin}></LoginForm>
-    </Container>
+    </Flex>
   );
 };
 
